@@ -15,3 +15,5 @@ track(33825). % + crossing
 {action(train(ID), move_forward, T)} :- train(ID), coord(ID, T, (X, Y)), cell((X,Y), 33825), dir(ID, T, e).
 {action(train(ID), move_forward, T)} :- train(ID), coord(ID, T, (X, Y)), cell((X,Y), 33825), dir(ID, T, s).
 {action(train(ID), move_forward, T)} :- train(ID), coord(ID, T, (X, Y)), cell((X,Y), 33825), dir(ID, T, w).
+
+
