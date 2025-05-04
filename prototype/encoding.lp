@@ -1,4 +1,6 @@
-
+#include "instance.lp".
+#include "propagation.lp".
+#include "tracktypes.lp".
 
 command(move_left).
 command(move_right).
@@ -16,6 +18,7 @@ time(0..GT) :- global(GT).
 % testers
 
 % for each timestep at the spawning timestep and after, for each train, there is exactly one coordinate and one direction
+% TODO: set this so train can be spawned later
 1 = {coord(ID, T1, (X, Y)) : cell((X, Y), _)} :- train(ID), time(T1), start(ID, (_, _), T2, _), T1 >= T2.
 1 = {dir(ID, T, D) : direction(D)} :- train(ID), time(T).
 
@@ -27,3 +30,9 @@ dir(ID, T, D) :- startTime(ID, T), start(ID, (_, _), _, D), train(ID).
 % it must not be that the coordinate of the train is not the same as the end coordinate
 :- train(ID), coord(ID, ET, (X1, Y1)), end(ID, (X2, Y2), ET), X1 != X2.
 :- train(ID), coord(ID, ET, (X1, Y1)), end(ID, (X2, Y2), ET), Y1 != Y2.
+
+% two trains cannot be at the same coordinate at the same time
+
+% two trains cannot swap coordinates (passing through each other)
+
+#show action/3.
