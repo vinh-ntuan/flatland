@@ -12,6 +12,8 @@ direction(s).
 direction(w).
 time(0..GT) :- global(GT).
 %TODO: how to combine generating with above commands, directions + limit actions by tracktypes
+%TODO: how to try to minimize waits
+%IDEA: sequences, pairing
 
 % generator in tracktypes
 
@@ -37,6 +39,8 @@ dir(ID, T, D) :- start(ID, _, T, D).
 
 
 % two trains cannot be at the same coordinate at the same time
-
+:- train(ID1), train(ID2), ID1 != ID2, time(T),
+    coord(ID1, T, (X1, Y1)), coord(ID2, T, (X2, Y2)), X1 == X2, Y1 == Y2.
 % two trains cannot swap coordinates (passing through each other)
+
 #show action/3.
