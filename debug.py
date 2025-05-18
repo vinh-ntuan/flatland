@@ -12,10 +12,13 @@ def main():
     for i in range(0, len(lines) - 1):
         if lines[i].startswith("Answer"):
             solutions.append(Solution.parse(lines[i+1]))
-    for id, s in enumerate(solutions):
+    for id, solution in enumerate(solutions):
         print("---------")
         print(f"Solution {id+1}")
-        print(s.pretty_string())
+        print(solution.pretty_string())
+
+        satisfies, log = solution.test_unique_actions()
+        print(f"Has only unique actions: {satisfies} {log}")
         
 
 
@@ -76,7 +79,19 @@ class Solution:
                 string += f"{a.time}: {a.type} ".ljust(ACTION_MAX_LENGTH) # padding for easy read
 
         return string
-        
+    
+    def test_unique_actions(self): 
+        satisfies = True
+        log = ""
+
+        for id in self.train_ids:
+            for time in self.time_steps:
+                actions = [a for a in self.actions if a.train_id == id and a.time == time]
+                if len(actions) > 1:
+                    satisfies = False
+                    log += str(actions)
+            
+        return satisfies, log        
 
 
         
